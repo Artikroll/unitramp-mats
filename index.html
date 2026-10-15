@@ -8,6 +8,7 @@
 <meta name="theme-color" content="#FFFFFF">
 <link rel="icon" href="assets/img/logo.svg">
 <style>
+html{overflow-x:clip}
 @font-face{font-family:"Plex";src:url(assets/fonts/IBMPlexSans.ttf) format("truetype");font-weight:100 700;font-stretch:85% 100%;font-display:swap}
 @font-face{font-family:"PlexMono";src:url(assets/fonts/IBMPlexMono-Medium.ttf) format("truetype");font-weight:500;font-display:swap}
 :root{
@@ -345,7 +346,7 @@ form.done .sent{opacity:1;pointer-events:auto}
   .tech-list div{grid-template-columns:1fr;gap:6px}
   .cnt,.prev{padding:18px}
   .prev .mat{height:230px}
-  .br-grid{grid-template-columns:1fr}
+  .br-grid{grid-template-columns:1fr}.br-grid>*{grid-column:auto!important}.br-grid figure{aspect-ratio:4/3}
   .dv{grid-template-columns:1fr}
   .dv div,.dv div+div{padding:20px 0;border-left:0;border-bottom:1px solid var(--line)}
   .dv-media{grid-template-columns:1fr}
@@ -479,6 +480,7 @@ form.done .sent{opacity:1;pointer-events:auto}
         <div class="code" id="plCode">Объект 1 из 5</div>
         <h3 id="plTitle"></h3>
         <p id="plText"></p>
+        
         <div class="ph" id="plPh"><img id="plImg" src="assets/img/m-resort.jpg" alt=""></div>
         <ul id="plList"></ul>
       </div>
@@ -563,7 +565,7 @@ form.done .sent{opacity:1;pointer-events:auto}
       <li><i>02</i><b>Подбор</b><p>Тип и размер мата под каждый объект.</p></li>
       <li><i>03</i><b>Смета</b><p>Расчёт за 12 часов.</p><em>12 ч</em></li>
       <li><i>04</i><b>Договор</b><p>Цвет, логотип, сроки.</p></li>
-      <li><i>05</i><b>Производство</b><p>Каждый мат проходит контроль.</p><em class="gp">срок <span class="gap">партии</span></em></li>
+      <li><i>05</i><b>Производство</b><p>Каждый мат проходит контроль.</p></li>
       <li><i>06</i><b>Отгрузка</b><p>Видео погрузки и отслеживание.</p></li>
     </ol>
     <div class="season" data-r>
@@ -601,7 +603,7 @@ form.done .sent{opacity:1;pointer-events:auto}
   <div class="wrap">
     <div class="head">
       <div><div class="code" data-r><b>07</b>На курортах</div><h2 data-r>Маты в цвете курорта</h2></div>
-      <p class="lead" data-r>Наносим логотип и шьём маты в фирменном цвете. Безопасность становится частью облика склона. <span class="gap">список курортов-клиентов и разрешение их показывать</span></p>
+      <p class="lead" data-r>Наносим логотип и шьём маты в фирменном цвете. Безопасность становится частью облика склона.</p>
     </div>
     <div class="br-grid">
       <figure data-r><img src="assets/img/m-resort.jpg" alt="Маты на опоре освещения, «Манжерок»" loading="lazy" style="object-position:28% 60%"><figcaption>Опора освещения, «Манжерок»</figcaption></figure>
@@ -660,11 +662,10 @@ form.done .sent{opacity:1;pointer-events:auto}
     <div><div class="code" data-r><b>11</b>Вопросы</div><h2 data-r style="margin-top:18px">Частые вопросы</h2></div>
     <div data-r>
       <details class="qa"><summary>Сколько стоят маты?<i class="pm"></i></summary><div class="a"><p>Цена зависит от типа, размера, количества и нанесения логотипа. Пришлите список объектов, и мы рассчитаем смету за 12 часов.</p></div></details>
-      <details class="qa"><summary>Как быстро сошьёте партию?<i class="pm"></i></summary><div class="a"><p>Соблюдение сроков производства гарантируем договором. <span class="gap">типичный срок для партии 50 и 200 матов</span></p></div></details>
+      <details class="qa"><summary>Как быстро сошьёте партию?<i class="pm"></i></summary><div class="a"><p>Соблюдение сроков производства гарантируем договором.</p></div></details>
       <details class="qa"><summary>Выдержат ли маты мороз и солнце?<i class="pm"></i></summary><div class="a"><p>Да. Маты устойчивы к перепадам температуры и не выгорают на солнце благодаря ткани ПВХ 650 г/м².</p></div></details>
       <details class="qa"><summary>Можно с логотипом и в нашем цвете?<i class="pm"></i></summary><div class="a"><p>Да. Цвет мата любой на выбор, логотип курорта наносим.</p></div></details>
       <details class="qa"><summary>Делаете нестандартные размеры?<i class="pm"></i></summary><div class="a"><p>Да, шьём маты нестандартных размеров и форм под ваши препятствия.</p></div></details>
-      <details class="qa"><summary>Ремонтируете старые маты?<i class="pm"></i></summary><div class="a"><p><span class="gap">ремонт и замена чехлов</span></p></div></details>
     </div>
   </div>
 </section>
