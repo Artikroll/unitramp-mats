@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Маты для горнолыжных трасс</title>
+<meta name="description" content="Защитные маты для горнолыжных трасс от производителя UNITRAMP: по ГОСТ Р 55881-2016, любой цвет, логотип курорта, смета за 12 часов.">
+<meta name="theme-color" content="#FFFFFF">
+<link rel="icon" href="assets/img/logo.svg">
+<style>
+@font-face{font-family:"Plex";src:url(assets/fonts/IBMPlexSans.ttf) format("truetype");font-weight:100 700;font-stretch:85% 100%;font-display:swap}
+@font-face{font-family:"PlexMono";src:url(assets/fonts/IBMPlexMono-Medium.ttf) format("truetype");font-weight:500;font-display:swap}
+:root{
+  --bg:#FFFFFF; --snow:#F2F5F8; --snow-2:#E6ECF2; --ink:#0E1A2B; --ink-2:#4A5A70; --ink-3:#8A97A8; --line:rgba(14,26,43,.12);
+  --or:#FF5B1F; --or-2:#E54A10; --or-soft:#FFEDE5; --sky:#2F6FED;
+  --gap:#B7791F;
+  --ease:cubic-bezier(.2,.7,.2,1); --out:cubic-bezier(.16,1,.3,1);
+  --pad:64px; --max:1312px; --sec:120px; --r:6px;
+  --b:"Plex",system-ui,sans-serif; --m:"PlexMono",ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:72px}
+body{background:var(--bg);color:var(--ink);font:400 18px/1.55 var(--b);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--or);outline-offset:3px}
+.wrap{max-width:calc(var(--max) + var(--pad)*2);margin:0 auto;padding:0 var(--pad)}
+.sec{padding:var(--sec) 0}
+h1,h2,h3{font-family:var(--b);font-weight:700;letter-spacing:-.025em;line-height:1.04;font-stretch:88%}
+h2{font-size:clamp(34px,4.6vw,64px)}
+h3{font-size:22px;letter-spacing:-.01em;line-height:1.2;font-weight:600;font-stretch:100%}
+.code{font:500 12px/1 var(--m);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);display:inline-flex;gap:10px;align-items:center}
+.code b{color:var(--or);font-weight:500}
+.lead{font-size:20px;line-height:1.55;color:var(--ink-2);max-width:34em}
+.head{display:grid;grid-template-columns:1.2fr 1fr;gap:48px;align-items:end;margin-bottom:56px;padding-top:20px;border-top:1px solid var(--ink)}
+.head h2{margin-top:18px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:58px;padding:0 28px;border-radius:var(--r);border:0;cursor:pointer;font:600 16px/1 var(--b);white-space:nowrap;transition:background .2s,transform .2s var(--ease)}
+.btn:hover{transform:translateY(-2px)}
+.btn-o{background:var(--or);color:#fff}.btn-o:hover{background:var(--or-2)}
+.btn-l{background:transparent;box-shadow:inset 0 0 0 1.5px currentColor}
+.btn .arr{width:18px;height:18px;transition:transform .25s}.btn:hover .arr{transform:translateX(4px)}
+.gap{display:inline;background:#FFF4D6;color:#7A4E0E;border:1px dashed var(--gap);border-radius:4px;padding:1px 6px;font:500 .78em/1.45 var(--b);box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.gap::before{content:"нужны данные · ";font-weight:600}
+.gap.ok::before{content:"подтвердить · "}
+body.clean .gap{display:none}
+.gaps-toggle{position:fixed;left:16px;bottom:16px;z-index:60;display:flex;align-items:center;gap:8px;height:40px;padding:0 14px;border-radius:999px;background:#FFF4D6;color:#7A4E0E;border:1px dashed var(--gap);font:600 13px/1 var(--b);cursor:pointer;transition:opacity .3s,transform .3s}
+.gaps-toggle b{display:inline-grid;place-items:center;min-width:22px;height:22px;border-radius:11px;background:var(--gap);color:#fff;font-size:12px;padding:0 6px}
+body.clean .gaps-toggle{background:#fff;color:var(--ink-2);border:1px solid var(--line)}
+body.at-top .gaps-toggle{opacity:0;transform:translateY(12px);pointer-events:none}
+
+/* header */
+.progress{position:fixed;top:0;left:0;height:3px;width:100%;transform-origin:0 50%;transform:scaleX(0);background:var(--or);z-index:80}
+.hdr{position:sticky;top:0;z-index:70;background:rgba(255,255,255,.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.hdr .wrap{display:flex;align-items:center;gap:32px;height:68px}
+.hdr .logo img{width:128px}
+.hdr .gost{font:500 11px/1.3 var(--m);color:var(--ink-3);letter-spacing:.06em;border-left:1px solid var(--line);padding-left:14px}
+.hdr nav{display:flex;gap:26px;margin-left:auto;font:500 15px/1 var(--b);color:var(--ink-2)}
+.hdr nav a:hover{color:var(--or)}
+.hdr .tel{font:600 15px/1 var(--b)}
+.hdr .btn{height:44px;padding:0 18px;font-size:14px}
+.burger{display:none;margin-left:auto;width:44px;height:44px;border:0;background:none;cursor:pointer;position:relative}
+.burger span{position:absolute;left:11px;right:11px;height:2px;background:var(--ink);transition:transform .3s}
+.burger span:nth-child(1){top:16px}.burger span:nth-child(2){top:26px}
+body.menu-open .burger span:nth-child(1){transform:translateY(5px) rotate(45deg)}
+body.menu-open .burger span:nth-child(2){transform:translateY(-5px) rotate(-45deg)}
+.mmenu{position:fixed;left:0;right:0;top:64px;bottom:0;z-index:65;background:#fff;padding:24px 16px 32px;display:flex;flex-direction:column;opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s}
+body.menu-open .mmenu{opacity:1;visibility:visible}
+.mmenu a:not(.btn){font:700 30px/1.3 var(--b);font-stretch:88%;padding:10px 0;border-bottom:1px solid var(--line)}
+.mmenu .btn{margin-top:auto}
+
+/* hero */
+.hero{position:relative;background:var(--snow);overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - 68px);min-height:calc(100svh - 68px)}
+.hero-l{padding:72px var(--pad) 48px max(var(--pad),calc((100vw - var(--max))/2));display:flex;flex-direction:column;justify-content:center}
+.hero h1{font-size:clamp(46px,5.6vw,92px);line-height:.98;margin-top:24px}
+.hero h1 em{font-style:normal;color:var(--or)}
+.hero .sub{font-size:20px;color:var(--ink-2);margin-top:24px;max-width:28em}
+.hero .ctas{display:flex;gap:12px;margin-top:36px;flex-wrap:wrap}
+.hero-specs{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:56px;border-top:1px solid var(--line)}
+.hero-specs div{padding:18px 16px 0 0}
+.hero-specs div+div{padding-left:16px;border-left:1px solid var(--line)}
+.hero-specs b{display:block;font:600 26px/1.1 var(--b);font-stretch:88%;letter-spacing:-.02em}
+.hero-specs span{display:block;font:500 11px/1.4 var(--m);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);margin-top:6px}
+.hero-r{position:relative;overflow:hidden}
+.hero-r img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.08);transition:transform 2s var(--out)}
+.loaded .hero-r img{transform:none}
+.hero-r .badge{position:absolute;left:24px;bottom:24px;background:#fff;border-radius:var(--r);padding:16px 18px;display:flex;gap:14px;align-items:center;box-shadow:0 20px 40px -24px rgba(0,0,0,.4)}
+.hero-r .badge .g{width:44px;height:44px;border-radius:50%;background:var(--or);display:grid;place-items:center;color:#fff;font:700 12px/1 var(--m)}
+.hero-r .badge b{font:600 15px/1.2 var(--b)}
+.hero-r .badge span{display:block;font-size:13px;color:var(--ink-2)}
+.hero [data-in]{opacity:0;transform:translateY(16px);transition:opacity .8s var(--ease),transform .9s var(--out)}
+.loaded .hero [data-in]{opacity:1;transform:none}
+
+[data-r]{opacity:0;transform:translateY(24px);transition:opacity .7s var(--ease),transform .8s var(--out)}
+[data-r].in{opacity:1;transform:none}
+
+/* slope */
+.slope-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:24px;align-items:stretch}
+.slope{position:relative;background:linear-gradient(180deg,#DCE8F5,#F7FAFD 60%);border-radius:var(--r);overflow:hidden;aspect-ratio:16/10}
+.slope svg{position:absolute;inset:0;width:100%;height:100%}
+.slope .hs{cursor:pointer}
+.slope .hs circle.p{fill:var(--or);stroke:#fff;stroke-width:3;transition:r .2s}
+.slope .hs circle.r{fill:none;stroke:var(--or);stroke-width:2;transform-box:fill-box;transform-origin:center;animation:ring 2.2s var(--ease) infinite}
+.slope .hs.on circle.p{fill:var(--ink)}
+.slope .hs text{font:600 12px var(--b);fill:#fff;pointer-events:none}
+@keyframes ring{0%{transform:scale(1);opacity:.9}100%{transform:scale(2.6);opacity:0}}
+.slope .lbl{position:absolute;left:14px;top:12px;font:500 11px/1 var(--m);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+.place{background:var(--ink);color:#fff;border-radius:var(--r);padding:32px;display:flex;flex-direction:column}
+.place .code{color:rgba(255,255,255,.55)}
+.place h3{font-size:28px;margin:14px 0 12px;font-weight:700;font-stretch:88%}
+.place p{color:rgba(255,255,255,.75);font-size:16px}
+.place ul{list-style:none;margin-top:auto;padding-top:24px;display:grid;gap:8px}
+.place li{display:flex;gap:10px;align-items:center;font-size:15px;padding:10px 12px;border-radius:var(--r);background:rgba(255,255,255,.06);cursor:pointer;transition:background .2s}
+.place li.on{background:var(--or)}
+.place li i{font:500 12px/1 var(--m);width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.15);display:grid;place-items:center;font-style:normal;flex:none}
+.gost-note{margin-top:14px;font-size:14px;color:var(--ink-2)}
+
+/* types */
+.types{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.ty{background:var(--snow);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;transition:transform .3s var(--ease),box-shadow .3s}
+.ty:hover{transform:translateY(-4px);box-shadow:0 24px 40px -28px rgba(14,26,43,.4)}
+.ty .im{background:#0E0E0E;aspect-ratio:16/10;overflow:hidden}
+.ty .im img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--out)}
+.ty:hover .im img{transform:scale(1.05)}
+.ty .bd{padding:22px 24px 26px;display:flex;flex-direction:column;flex:1}
+.ty h3{font-size:22px}
+.ty p{font-size:15px;color:var(--ink-2);margin-top:8px}
+.ty dl{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line);font-size:14px}
+.ty dt{font:500 11px/1.6 var(--m);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+.ty .go{margin-top:auto;padding-top:18px;font-weight:600;color:var(--or)}
+.custom{margin-top:16px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;background:var(--or-soft);border-radius:var(--r);padding:24px 28px}
+.custom b{font:600 20px/1.3 var(--b)}
+.custom p{font-size:15px;color:var(--ink-2);margin-top:4px}
+
+/* tech */
+.tech-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.layers{position:relative;height:440px}
+.ly{position:absolute;left:10%;right:10%;height:84px;border-radius:10px;display:flex;align-items:center;padding:0 22px;font:600 15px/1.2 var(--b);transition:transform 1s var(--out),box-shadow .4s;box-shadow:0 18px 30px -22px rgba(14,26,43,.5)}
+.ly small{display:block;font:500 11px/1.4 var(--m);letter-spacing:.05em;margin-top:4px;opacity:.8}
+.ly1{top:170px;background:var(--or);color:#fff;z-index:4}
+.ly2{top:180px;background:#FFC7A8;color:var(--ink);z-index:3}
+.ly3{top:190px;background:#FFE3D2;color:var(--ink);z-index:2}
+.ly4{top:200px;background:var(--ink);color:#fff;z-index:1}
+.layers.in .ly1{transform:translateY(-160px) skewY(-4deg)}
+.layers.in .ly2{transform:translateY(-60px) skewY(-4deg)}
+.layers.in .ly3{transform:translateY(40px) skewY(-4deg)}
+.layers.in .ly4{transform:translateY(140px) skewY(-4deg)}
+.tech-list{display:grid;gap:0;border-top:1px solid var(--line)}
+.tech-list div{display:grid;grid-template-columns:150px 1fr;gap:20px;padding:20px 0;border-bottom:1px solid var(--line)}
+.tech-list dt{font:500 12px/1.5 var(--m);letter-spacing:.06em;text-transform:uppercase;color:var(--or)}
+.tech-list b{font:600 18px/1.3 var(--b)}
+.tech-list p{font-size:15px;color:var(--ink-2);margin-top:4px}
+
+/* configurator */
+.cfg{background:var(--snow)}
+.cfg-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+.cnt{background:#fff;border-radius:var(--r);padding:28px}
+.cnt-row{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line)}
+.cnt-row:last-of-type{border-bottom:0}
+.cnt-row b{font:600 17px/1.3 var(--b)}
+.cnt-row span{display:block;font-size:13px;color:var(--ink-3)}
+.step{display:flex;align-items:center;border:1.5px solid var(--line);border-radius:var(--r)}
+.step button{width:44px;height:44px;border:0;background:none;cursor:pointer;font:600 20px/1 var(--b);color:var(--ink-2)}
+.step button:hover{color:var(--or)}
+.step input{width:56px;height:44px;border:0;text-align:center;font:500 17px/1 var(--m);outline:0;background:none}
+.prev{background:#fff;border-radius:var(--r);padding:28px;position:sticky;top:90px}
+.prev .mat{position:relative;height:300px;display:grid;place-items:center;background:linear-gradient(180deg,#E9F0F7,#fff);border-radius:var(--r);overflow:hidden}
+.prev svg{width:62%;height:auto;max-height:270px;filter:drop-shadow(0 24px 24px rgba(14,26,43,.25))}
+.prev .face{transition:fill .4s}
+.colors{display:flex;gap:8px;margin:18px 0 6px;flex-wrap:wrap}
+.colors button{width:40px;height:40px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 1.5px var(--line);cursor:pointer;transition:box-shadow .2s}
+.colors button.on{box-shadow:0 0 0 2px var(--ink)}
+.prev label{display:block;font-size:13px;color:var(--ink-3);margin-top:14px}
+.prev input[type=text]{width:100%;height:52px;border:1.5px solid var(--line);border-radius:var(--r);padding:0 14px;font:600 18px/1 var(--b);outline:0;margin-top:6px}
+.prev input[type=text]:focus{border-color:var(--or)}
+.tot{display:flex;justify-content:space-between;align-items:baseline;margin-top:22px;padding-top:18px;border-top:1px solid var(--line)}
+.tot b{font:700 48px/1 var(--b);font-stretch:88%;letter-spacing:-.03em}
+.tot span{font-size:14px;color:var(--ink-2)}
+.prev .btn{width:100%;margin-top:16px}
+.prev .note{font-size:13px;color:var(--ink-3);margin-top:12px}
+
+/* brand / cases */
+.br-grid{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:16px}
+.br-grid figure{position:relative;border-radius:var(--r);overflow:hidden;background:var(--snow)}
+.br-grid figure img{width:100%;height:100%;object-fit:cover}
+.br-grid figure:first-child{grid-row:span 2}
+.br-grid figcaption{position:absolute;left:12px;bottom:12px;background:#fff;border-radius:4px;padding:8px 10px;font-size:13px;font-weight:500}
+.br-txt{background:var(--ink);color:#fff;border-radius:var(--r);padding:28px;display:flex;flex-direction:column;justify-content:space-between}
+.br-txt b{font:700 30px/1.1 var(--b);font-stretch:88%}
+.br-txt p{color:rgba(255,255,255,.75);font-size:15px;margin-top:12px}
+
+/* delivery */
+.dv{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--ink)}
+.dv div{padding:28px 24px 30px 0}
+.dv div+div{padding-left:24px;border-left:1px solid var(--line)}
+.dv i{font:500 12px/1 var(--m);color:var(--or);font-style:normal}
+.dv b{display:block;font:600 19px/1.3 var(--b);margin-top:14px}
+.dv p{font-size:14px;color:var(--ink-2);margin-top:6px}
+.dv-media{display:grid;grid-template-columns:1fr 1.4fr;gap:16px;margin-top:24px}
+.dv-media figure{border-radius:var(--r);overflow:hidden;position:relative;aspect-ratio:4/3}
+.dv-media img{width:100%;height:100%;object-fit:cover}
+.yt{position:relative;display:block;border-radius:var(--r);overflow:hidden;background:#000;aspect-ratio:16/9}
+.yt img{width:100%;height:100%;object-fit:cover;opacity:.8;transition:opacity .3s}
+.yt:hover img{opacity:1}
+.yt .pl{position:absolute;left:50%;top:50%;width:76px;height:76px;margin:-38px 0 0 -38px;border-radius:50%;background:var(--or);display:grid;place-items:center}
+.yt .pl::before{content:"";border-left:22px solid #fff;border-top:13px solid transparent;border-bottom:13px solid transparent;margin-left:6px}
+.yt span{position:absolute;left:14px;bottom:12px;color:#fff;font-size:14px;font-weight:500;text-shadow:0 1px 6px rgba(0,0,0,.6)}
+
+/* certs & about */
+.ab{display:grid;grid-template-columns:1fr 1.2fr;gap:48px;align-items:center}
+.certs{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.certs a{display:block;border-radius:var(--r);overflow:hidden;border:1px solid var(--line);transition:transform .3s var(--ease),box-shadow .3s}
+.certs a:hover{transform:translateY(-4px) rotate(-1deg);box-shadow:0 20px 30px -20px rgba(0,0,0,.35)}
+.quote{margin-top:28px;display:grid;grid-template-columns:72px 1fr;gap:16px;align-items:center;background:var(--snow);border-radius:var(--r);padding:18px}
+.quote img{width:72px;height:72px;border-radius:50%;object-fit:cover;object-position:50% 15%;background:#fff}
+.quote p{font-size:16px;font-weight:500}
+.quote span{display:block;font-size:13px;color:var(--ink-3);margin-top:4px}
+.ab-nums{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:28px}
+.ab-nums div{background:var(--snow);border-radius:var(--r);padding:18px}
+.ab-nums b{display:block;font:700 34px/1 var(--b);font-stretch:88%}
+.ab-nums span{font-size:14px;color:var(--ink-2)}
+
+/* faq form */
+.faq{display:grid;grid-template-columns:1fr 1.6fr;gap:48px}
+.qa{border-bottom:1px solid var(--line)}
+.qa:first-child{border-top:1px solid var(--line)}
+.qa summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:22px 0;font:600 19px/1.3 var(--b)}
+.qa summary::-webkit-details-marker{display:none}
+.qa .pm{flex:none;width:32px;height:32px;border-radius:var(--r);background:var(--snow);position:relative;transition:background .3s}
+.qa .pm::before,.qa .pm::after{content:"";position:absolute;left:50%;top:50%;width:12px;height:2px;background:var(--ink);transform:translate(-50%,-50%);transition:transform .35s var(--ease)}
+.qa .pm::after{transform:translate(-50%,-50%) rotate(90deg)}
+.qa[open] .pm{background:var(--or)}
+.qa[open] .pm::before,.qa[open] .pm::after{background:#fff}
+.qa[open] .pm::after{transform:translate(-50%,-50%) rotate(0)}
+.qa .a{overflow:hidden}
+.qa .a p{padding:0 56px 22px 0;color:var(--ink-2);font-size:17px}
+.cta{background:var(--ink);color:#fff}
+.cta-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:56px}
+.cta .code{color:rgba(255,255,255,.5)}
+.cta h2{margin-top:18px}
+.cta .lead{color:rgba(255,255,255,.75);margin-top:18px}
+.contacts{display:flex;gap:10px;margin-top:28px;flex-wrap:wrap}
+.contacts a{display:inline-flex;align-items:center;height:48px;padding:0 18px;border-radius:var(--r);box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.3);font-weight:600;font-size:15px}
+form.lf{background:#fff;color:var(--ink);border-radius:var(--r);padding:32px;display:grid;grid-template-columns:1fr 1fr;gap:14px;position:relative}
+.f{display:flex;flex-direction:column;gap:7px;grid-column:span 2}
+.f.h{grid-column:span 1}
+.f label{font-size:13px;font-weight:600;color:var(--ink-2)}
+.f input,.f select{height:54px;border:1.5px solid var(--line);border-radius:var(--r);background:var(--snow);padding:0 16px;font-size:17px;outline:0;width:100%;appearance:none;-webkit-appearance:none}
+.f select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='8'%3E%3Cpath d='M1 1l6 6 6-6' stroke='%230E1A2B' stroke-width='1.6' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;padding-right:40px}
+.f input:focus,.f select:focus{border-color:var(--or);background:#fff}
+.picked{grid-column:span 2;background:var(--or-soft);color:var(--or-2);padding:12px 14px;border-radius:var(--r);font-size:14px}
+form.lf .btn{grid-column:span 2;margin-top:6px}
+form.lf .fine{grid-column:span 2;font-size:13px;color:var(--ink-3)}
+.sent{position:absolute;inset:0;border-radius:var(--r);background:#fff;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:14px;padding:40px;opacity:0;pointer-events:none;transition:opacity .4s}
+form.done .sent{opacity:1;pointer-events:auto}
+.sent .ok{width:60px;height:60px;border-radius:50%;background:var(--or);display:grid;place-items:center}
+.sent h3{font-size:28px}
+.foot{padding:40px 0 96px;font-size:14px;color:var(--ink-3)}
+.foot .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
+.foot img{width:120px}
+
+@media (max-width:1199px){
+  :root{--pad:32px;--sec:96px}
+  .hdr nav,.hdr .tel,.hdr .btn,.hdr .gost{display:none}.burger{display:block}
+  .hero-grid{grid-template-columns:1fr}
+  .hero-l{padding:56px var(--pad) 40px}
+  .hero-r{min-height:420px}
+  .head,.slope-grid,.tech-grid,.cfg-grid,.ab,.faq,.cta-grid{grid-template-columns:1fr}
+  .types{grid-template-columns:1fr 1fr}
+  .prev{position:relative;top:0}
+  .br-grid{grid-template-columns:1fr 1fr}.br-grid figure:first-child{grid-row:auto;grid-column:1/-1;aspect-ratio:16/10}
+  .dv{grid-template-columns:1fr 1fr}
+  .dv div:nth-child(3){padding-left:0;border-left:0}
+}
+@media (max-width:767px){
+  :root{--pad:16px;--sec:72px}
+  body{font-size:16px}
+  .lead,.hero .sub{font-size:17px}
+  h2{font-size:clamp(30px,8.6vw,40px)}
+  .hdr .wrap{height:64px}.hdr .logo img{width:112px}
+  .hero-l{padding:36px 16px 28px}
+  .hero h1{font-size:clamp(38px,11vw,50px)}
+  .hero .ctas{flex-direction:column}.hero .ctas .btn{width:100%}
+  .hero-specs{margin-top:32px}
+  .hero-specs b{font-size:19px}
+  .hero-specs span{font-size:10px}
+  .hero-r{min-height:320px}
+  .head{margin-bottom:32px;gap:14px}
+  .slope{aspect-ratio:4/3}
+  .slope .hs text{display:none}
+  .place{padding:22px}
+  .types{grid-template-columns:1fr}
+  .layers{height:380px}
+  .ly{left:4%;right:4%;height:72px;font-size:13px;padding:0 16px}
+  .layers.in .ly1{transform:translateY(-150px) skewY(-4deg)}
+  .layers.in .ly2{transform:translateY(-62px) skewY(-4deg)}
+  .layers.in .ly3{transform:translateY(26px) skewY(-4deg)}
+  .layers.in .ly4{transform:translateY(114px) skewY(-4deg)}
+  .tech-list div{grid-template-columns:1fr;gap:6px}
+  .cnt,.prev{padding:18px}
+  .prev .mat{height:230px}
+  .br-grid{grid-template-columns:1fr}
+  .dv{grid-template-columns:1fr}
+  .dv div,.dv div+div{padding:20px 0;border-left:0;border-bottom:1px solid var(--line)}
+  .dv-media{grid-template-columns:1fr}
+  .certs{gap:8px}
+  .qa summary{font-size:17px}
+  .qa .a p{padding:0 0 20px;font-size:16px}
+  form.lf{padding:20px;grid-template-columns:1fr}
+  .f.h{grid-column:span 2}
+  .gaps-toggle{left:auto;right:12px;bottom:12px;height:36px;font-size:12px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition:none!important;animation:none!important}
+  [data-r],.hero [data-in]{opacity:1!important;transform:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body class="at-top">
+<div class="progress" id="progress"></div>
+<header class="hdr">
+  <div class="wrap">
+    <a href="#top" class="logo"><img src="assets/img/logo.svg" alt="UNITRAMP"></a>
+    <span class="gost">ГОСТ Р<br>55881-2016</span>
+    <nav aria-label="Разделы"><a href="#where">Где ставить</a><a href="#types">Маты</a><a href="#tech">Технология</a><a href="#cfg">Расчёт</a><a href="#faq">Вопросы</a></nav>
+    <a href="tel:88007007809" class="tel">8 800 700-78-09</a>
+    <a href="#form" class="btn btn-o">Смета за 12 часов</a>
+    <button class="burger" id="burger" aria-label="Меню" aria-expanded="false"><span></span><span></span></button>
+  </div>
+</header>
+<div class="mmenu" id="mmenu"><a href="#where">Где ставить</a><a href="#types">Маты</a><a href="#tech">Технология</a><a href="#cfg">Расчёт</a><a href="#faq">Вопросы</a><a href="#form" class="btn btn-o">Смета за 12 часов</a></div>
+
+<main id="top">
+<!-- 1 HERO -->
+<section class="hero">
+  <div class="hero-grid">
+    <div class="hero-l">
+      <div class="code" data-in><b>■</b>Производитель с 2014 года · Новосибирск</div>
+      <h1 data-in style="transition-delay:.08s">Защитные маты для <em>горнолыжных трасс</em></h1>
+      <p class="sub" data-in style="transition-delay:.16s">Закрываем опоры канатных дорог, снежные пушки, опоры освещения и деревья по ГОСТ Р 55881-2016. Любой цвет и логотип вашего курорта.</p>
+      <div class="ctas" data-in style="transition-delay:.24s"><a href="#cfg" class="btn btn-o">Рассчитать маты <svg class="arr" viewBox="0 0 18 18" fill="none"><path d="M3 9h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.8"/></svg></a><a href="#where" class="btn btn-l">Где ставить по ГОСТ</a></div>
+      <div class="hero-specs" data-in style="transition-delay:.32s">
+        <div><b>650 г/м²</b><span>ткань ПВХ</span></div>
+        <div><b>12 часов</b><span>на расчёт сметы</span></div>
+        <div><b>1 год</b><span>гарантия производителя</span></div>
+      </div>
+    </div>
+    <div class="hero-r">
+      <img src="assets/img/m-resort.jpg" alt="Защитные маты на опорах горнолыжной трассы" fetchpriority="high">
+      <div class="badge" data-in style="transition-delay:.5s"><span class="g">ГОСТ</span><div><b>Р 55881-2016</b><span>Сертифицировано</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 2 WHERE -->
+<section class="sec" id="where">
+  <div class="wrap">
+    <div class="head">
+      <div><div class="code" data-r><b>01</b>Где ставить</div><h2 data-r>Что на склоне нужно закрыть матами</h2></div>
+      <p class="lead" data-r>По ГОСТ Р 55881-2016 защитные маты ставят там, где лыжник может столкнуться с препятствием. Нажмите на точку на схеме.</p>
+    </div>
+    <div class="slope-grid">
+      <div class="slope" data-r>
+        <span class="lbl">Схема склона</span>
+        <svg viewBox="0 0 800 500" id="slopeSvg" aria-hidden="true">
+          <path d="M0 140 L520 40 L800 0 L800 500 L0 500 Z" fill="#fff"/>
+          <path d="M0 140 L520 40 L800 0" fill="none" stroke="#BFD0E2" stroke-width="2"/>
+          <path d="M60 500 C200 380 320 300 420 230 S600 120 700 60" fill="none" stroke="#E6EEF6" stroke-width="70" stroke-linecap="round"/>
+          <path d="M60 500 C200 380 320 300 420 230 S600 120 700 60" fill="none" stroke="#C9D7E6" stroke-width="2" stroke-dasharray="8 10"/>
+          <g stroke="#0E1A2B" stroke-width="5"><line x1="560" y1="40" x2="560" y2="140"/><line x1="360" y1="110" x2="360" y2="250"/><line x1="160" y1="180" x2="160" y2="360"/></g>
+          <path d="M140 180 L560 40 M140 196 L560 56" stroke="#0E1A2B" stroke-width="2"/>
+          <g fill="#0E1A2B"><rect x="300" y="138" width="22" height="16" rx="3"/><rect x="460" y="86" width="22" height="16" rx="3"/></g>
+          <g fill="#2E5D3A"><path d="M640 200 l22 50 h-44z"/><path d="M670 230 l18 42 h-36z"/><path d="M110 430 l20 46 h-40z"/></g>
+          <path d="M540 300 q30 -30 60 0 q-30 20 -60 0z" fill="#9AA8B8"/>
+          <g fill="#0E1A2B"><rect x="250" y="290" width="6" height="90"/><rect x="236" y="286" width="34" height="8" rx="2"/></g>
+          <path d="M470 330 l40 -26 l14 22 l-40 26z" fill="#0E1A2B"/>
+          <rect x="20" y="410" width="90" height="60" rx="4" fill="#0E1A2B"/>
+        </svg>
+      </div>
+      <div class="place" data-r style="transition-delay:.06s">
+        <div class="code" id="plCode">Объект 1 из 5</div>
+        <h3 id="plTitle"></h3>
+        <p id="plText"></p>
+        <ul id="plList"></ul>
+      </div>
+    </div>
+    <p class="gost-note" data-r>Места установки перечислены по требованиям ГОСТ Р 55881-2016, как на нашем сайте sport-mat.com. Тип и размер мата подбираем по фото объекта.</p>
+  </div>
+</section>
+
+<!-- 3 TYPES -->
+<section class="sec" id="types" style="padding-top:0">
+  <div class="wrap">
+    <div class="head">
+      <div><div class="code" data-r><b>02</b>Каталог</div><h2 data-r>Три базовых типа матов</h2></div>
+      <p class="lead" data-r>Под любую опору и препятствие. Нестандартные размеры и формы делаем под заказ. <span class="gap">размеры и цены по типам</span></p>
+    </div>
+    <div class="types">
+      <a href="#form" class="ty" data-r data-i="1"><div class="im"><img src="assets/img/m-logo.jpg" alt="Прямоугольный мат с логотипом" loading="lazy" style="object-position:50% 40%"></div><div class="bd"><h3>Прямоугольный «универсальный»</h3><p>Базовое решение для опор, пушек и столбов.</p><dl><dt>Крепление</dt><dd>липучка или шнур с люверсами</dd><dt>Ткань</dt><dd>ПВХ 650 г/м²</dd></dl><span class="go">Уточнить цену →</span></div></a>
+      <a href="#form" class="ty" data-r data-i="2" style="transition-delay:.05s"><div class="im"><img src="assets/img/m-book2.png" alt="Мат типа книжка" loading="lazy"></div><div class="bd"><h3>Тип «книжка»</h3><p>Раскрывается и обхватывает опору с двух сторон.</p><dl><dt>Крепление</dt><dd>липучка или шнур с люверсами</dd><dt>Ткань</dt><dd>ПВХ 650 г/м²</dd></dl><span class="go">Уточнить цену →</span></div></a>
+      <a href="#form" class="ty" data-r data-i="3" style="transition-delay:.1s"><div class="im"><img src="assets/img/m-quad.png" alt="4-составной мат" loading="lazy"></div><div class="bd"><h3>Прямоугольный 4-составной</h3><p>Закрывает объект со всех сторон.</p><dl><dt>Крепление</dt><dd>липучка или шнур с люверсами</dd><dt>Ткань</dt><dd>ПВХ 650 г/м²</dd></dl><span class="go">Уточнить цену →</span></div></a>
+    </div>
+    <div class="custom" data-r><div><b>Нужен нестандартный размер или цвет?</b><p>От логотипа курорта на мате до нестандартной формы под ваше препятствие.</p></div><a href="#form" class="btn btn-o">Обсудить</a></div>
+  </div>
+</section>
+
+<!-- 4 TECH -->
+<section class="sec" id="tech" style="background:var(--snow)">
+  <div class="wrap tech-grid">
+    <div class="layers" id="layers" data-r>
+      <div class="ly ly1"><div>Ткань ПВХ 650 г/м²<small>европейская, не выгорает</small></div></div>
+      <div class="ly ly2"><div>Поролон 22–28 кг/м³<small>мягкий слой</small></div></div>
+      <div class="ly ly3"><div>Пена 28–35 кг/м³<small>гасит удар</small></div></div>
+      <div class="ly ly4"><div>Герметичные швы и крепление<small>липучка или шнур с люверсами</small></div></div>
+    </div>
+    <div>
+      <div class="code" data-r><b>03</b>Технология</div>
+      <h2 data-r style="margin-top:18px">Что внутри мата</h2>
+      <p class="lead" data-r style="margin-top:18px;margin-bottom:28px">Маты работают на морозе, под солнцем и снегом весь сезон. Поэтому каждый слой подобран под нагрузку склона.</p>
+      <dl class="tech-list" data-r>
+        <div><dt>Наполнитель</dt><dd><b>Комбинированная плотность</b><p>Поролон 22–28 кг/м³ и пена 28–35 кг/м³ лучше гасят удар.</p></dd></div>
+        <div><dt>Швы</dt><dd><b>Герметичная конструкция</b><p>Защищает наполнитель от влаги и продлевает срок службы в 2 раза.</p></dd></div>
+        <div><dt>Ткань</dt><dd><b>ПВХ 650 г/м²</b><p>Европейская ткань, устойчива к выгоранию и механическим воздействиям.</p></dd></div>
+        <div><dt>Контроль</dt><dd><b>Проверка каждого мата</b><p>Перед отгрузкой каждый мат проходит контроль качества.</p></dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- 5 CONFIGURATOR -->
+<section class="sec cfg" id="cfg">
+  <div class="wrap">
+    <div class="head">
+      <div><div class="code" data-r><b>04</b>Расчёт</div><h2 data-r>Посчитайте объекты и выберите цвет</h2></div>
+      <p class="lead" data-r>Отметьте, сколько объектов нужно закрыть на склоне, и выберите цвет. Пришлём смету за 12 часов.</p>
+    </div>
+    <div class="cfg-grid">
+      <div class="cnt" data-r id="cnt"></div>
+      <div class="prev" data-r style="transition-delay:.06s">
+        <div class="mat">
+          <svg viewBox="0 0 220 300" aria-hidden="true"><path class="face" id="matSide" d="M150 20 L190 40 L190 290 L150 270 Z" fill="#C2410C"/><rect class="face" id="matFront" x="30" y="20" width="120" height="250" rx="6" fill="#FF5B1F"/><path d="M30 20 L70 0 L190 20 L150 20 Z" fill="#000" opacity=".12"/><text id="matText" x="90" y="145" text-anchor="middle" transform="rotate(-90 90 145)" font-family="Plex,sans-serif" font-weight="700" font-size="22" fill="#fff" letter-spacing="2">КУРОРТ</text><g opacity=".5" stroke="#fff" stroke-width="2"><line x1="38" y1="40" x2="38" y2="250"/><line x1="142" y1="40" x2="142" y2="250"/></g></svg>
+        </div>
+        <label>Цвет мата: любой на выбор</label>
+        <div class="colors" id="colors"></div>
+        <label for="resort">Логотип или название курорта на мате</label>
+        <input type="text" id="resort" maxlength="14" value="Курорт">
+        <div class="tot"><span>Объектов на склоне</span><b id="tot">0</b></div>
+        <a href="#form" class="btn btn-o">Получить смету за 12 часов</a>
+        <p class="note">Эскиз показывает цвет и надпись. Тип и размер каждого мата подберём по фото объектов.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 BRAND -->
+<section class="sec" id="brand">
+  <div class="wrap">
+    <div class="head">
+      <div><div class="code" data-r><b>05</b>На курортах</div><h2 data-r>Маты в цвете курорта</h2></div>
+      <p class="lead" data-r>Наносим логотип и шьём маты в фирменном цвете. Безопасность становится частью облика склона. <span class="gap">список курортов-клиентов и разрешение их показывать</span></p>
+    </div>
+    <div class="br-grid">
+      <figure data-r><img src="assets/img/m-gondola.jpg" alt="Маты у станции канатной дороги" loading="lazy"><figcaption>Маты у станции канатной дороги</figcaption></figure>
+      <figure data-r style="transition-delay:.05s"><img src="assets/img/m-logo.jpg" alt="Мат с логотипом курорта" loading="lazy" style="object-position:50% 35%"><figcaption>Логотип курорта на мате</figcaption></figure>
+      <div class="br-txt" data-r style="transition-delay:.1s"><b>Любой цвет. Любой логотип.</b><p>Подбираем цвет под фирменный стиль курорта и наносим логотип, чтобы маты работали и на безопасность, и на узнаваемость.</p></div>
+      <figure data-r style="grid-column:span 2"><img src="assets/img/m-strip.jpg" alt="Горнолыжный склон" loading="lazy" style="aspect-ratio:21/7"></figure>
+    </div>
+  </div>
+</section>
+
+<!-- 7 DELIVERY -->
+<section class="sec" id="delivery" style="padding-top:0">
+  <div class="wrap">
+    <div class="head">
+      <div><div class="code" data-r><b>06</b>Доставка</div><h2 data-r>Отгрузка по всей России</h2></div>
+      <p class="lead" data-r>Соблюдаем сроки производства и показываем, как едет ваш заказ. <span class="gap">срок производства партии</span></p>
+    </div>
+    <div class="dv" data-r>
+      <div><i>01</i><b>Выгодная доставка</b><p>Подбираем самый выгодный и быстрый вариант.</p></div>
+      <div><i>02</i><b>Надёжная упаковка</b><p>Маты приходят чистыми и целыми.</p></div>
+      <div><i>03</i><b>Видео погрузки</b><p>Присылаем видео, как грузим ваше оборудование.</p></div>
+      <div><i>04</i><b>Отслеживание</b><p>Следим за грузом до вашего склада.</p></div>
+    </div>
+    <div class="dv-media">
+      <figure data-r><img src="assets/img/m-truck.jpg" alt="Погрузка матов в фуру" loading="lazy"></figure>
+      <a class="yt" data-r href="https://www.youtube.com/watch?v=Lws9CVhe70Q" target="_blank" rel="noopener"><img src="assets/img/yt.jpg" alt="Видео о горнолыжных матах" loading="lazy"><span class="pl"></span><span>Видео на YouTube</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- 8 ABOUT -->
+<section class="sec" id="about" style="background:var(--snow)">
+  <div class="wrap ab">
+    <div>
+      <div class="code" data-r><b>07</b>Сертификаты</div>
+      <h2 data-r style="margin-top:18px">Соответствует ГОСТ Р 55881-2016</h2>
+      <div class="certs" data-r style="margin-top:28px">
+        <a href="assets/img/cert-1.jpg" target="_blank" rel="noopener"><img src="assets/img/cert-1.jpg" alt="Сертификат соответствия" loading="lazy"></a>
+        <a href="assets/img/cert-2.jpg" target="_blank" rel="noopener"><img src="assets/img/cert-2.jpg" alt="Сертификат соответствия" loading="lazy"></a>
+        <a href="assets/img/cert-3.jpg" target="_blank" rel="noopener"><img src="assets/img/cert-3.jpg" alt="Сертификат соответствия" loading="lazy"></a>
+      </div>
+    </div>
+    <div>
+      <div class="code" data-r><b>08</b>О компании</div>
+      <h2 data-r style="margin-top:18px">Шьём маты с 2014 года</h2>
+      <p class="lead" data-r style="margin-top:18px">UNITRAMP производит защитные маты для горнолыжных трасс на своём производстве в Новосибирске. Цена от производителя, без посредников.</p>
+      <div class="ab-nums" data-r><div><b>с 2014</b><span>производим маты для склонов</span></div><div><b>1 год</b><span>гарантия производителя</span></div></div>
+      <div class="quote" data-r><img src="assets/img/roman.png" alt="Роман Сотников" loading="lazy"><div><p>«Бережно относимся к здоровью каждого гостя вашего курорта. За результат отвечаю лично.»</p><span>Роман Сотников, основатель UNITRAMP, мастер спорта России</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 9 FAQ -->
+<section class="sec" id="faq">
+  <div class="wrap faq">
+    <div><div class="code" data-r><b>09</b>Вопросы</div><h2 data-r style="margin-top:18px">Частые вопросы</h2></div>
+    <div data-r>
+      <details class="qa"><summary>Сколько стоят маты?<i class="pm"></i></summary><div class="a"><p>Цена зависит от типа, размера, количества и нанесения логотипа. Пришлите список объектов, и мы рассчитаем смету за 12 часов.</p></div></details>
+      <details class="qa"><summary>Как быстро сошьёте партию?<i class="pm"></i></summary><div class="a"><p>Соблюдение сроков производства гарантируем договором. <span class="gap">типичный срок для партии 50 и 200 матов</span></p></div></details>
+      <details class="qa"><summary>Выдержат ли маты мороз и солнце?<i class="pm"></i></summary><div class="a"><p>Да. Маты устойчивы к перепадам температуры и не выгорают на солнце благодаря ткани ПВХ 650 г/м².</p></div></details>
+      <details class="qa"><summary>Можно с логотипом и в нашем цвете?<i class="pm"></i></summary><div class="a"><p>Да. Цвет мата любой на выбор, логотип курорта наносим.</p></div></details>
+      <details class="qa"><summary>Делаете нестандартные размеры?<i class="pm"></i></summary><div class="a"><p>Да, шьём маты нестандартных размеров и форм под ваши препятствия.</p></div></details>
+      <details class="qa"><summary>Ремонтируете старые маты?<i class="pm"></i></summary><div class="a"><p><span class="gap">ремонт и замена чехлов</span></p></div></details>
+    </div>
+  </div>
+</section>
+
+<!-- 10 FORM -->
+<section class="sec cta" id="form">
+  <div class="wrap cta-grid">
+    <div>
+      <div class="code" data-r><b>10</b>Заявка</div>
+      <h2 data-r>Смета за 12 часов</h2>
+      <p class="lead" data-r>Оставьте контакты и список объектов. Менеджер уточнит детали и пришлёт расчёт.</p>
+      <div class="contacts" data-r><a href="tel:88007007809">8 800 700-78-09</a><a href="mailto:info@unitramp.ru">info@unitramp.ru</a></div>
+    </div>
+    <form class="lf" id="lf" novalidate data-r>
+      <div class="f h"><label for="f-res">Курорт</label><input id="f-res" placeholder="Название и регион"></div>
+      <div class="f h"><label for="f-tel">Телефон</label><input id="f-tel" type="tel" inputmode="tel" placeholder="+7 (___) ___-__-__"></div>
+      <div class="f"><label for="f-type">Тип матов</label><select id="f-type"><option>Пока не знаю, нужна консультация</option><option>Прямоугольный универсальный</option><option>Книжка</option><option>Прямоугольный 4-составной</option><option>Нестандартный размер</option></select></div>
+      <div class="picked" id="picked">Объекты из расчёта: пока не выбраны</div>
+      <button class="btn btn-o" type="submit">Получить смету</button>
+      <p class="fine">Нажимая кнопку, вы соглашаетесь с политикой обработки персональных данных.</p>
+      <div class="sent"><div class="ok"><svg width="26" height="26" viewBox="0 0 16 16"><path d="M2 8.5l4 4 8-9" fill="none" stroke="#fff" stroke-width="2"/></svg></div><h3>Заявка принята</h3><p style="font-size:14px;color:var(--ink-2)">Это прототип: форма ничего не отправляет. На рабочем сайте заявка уйдёт в CRM вместе с расчётом объектов, цветом и надписью.</p><button type="button" id="again" style="background:none;border:0;border-bottom:1.5px solid;font-weight:600;cursor:pointer">Заполнить снова</button></div>
+    </form>
+  </div>
+</section>
+</main>
+<footer class="foot"><div class="wrap"><img src="assets/img/logo.svg" alt="UNITRAMP"><span>Прототип сайта горнолыжных матов · версия 1 от 15.10.2026</span></div></footer>
+<button class="gaps-toggle" id="gapsToggle" type="button">Пробелы в данных <b id="gapsN">0</b></button>
+
+<script>
+(function(){
+var RM=matchMedia('(prefers-reduced-motion: reduce)').matches,D=document;
+var $=function(s,c){return (c||D).querySelector(s)},$$=function(s,c){return [].slice.call((c||D).querySelectorAll(s))};
+
+/* places from GOST list on sport-mat.com */
+var PL=[
+ {t:'Опоры канатных дорог',x:360,y:180,d:'Опоры кресельных и гондольных подъёмников на трассе и рядом с ней.'},
+ {t:'Системы снегообразования',x:253,y:340,d:'Снежные пушки и их опоры: все системы искусственного снегообразования.'},
+ {t:'Опоры освещения',x:160,y:270,d:'Световые опоры вдоль трассы для вечернего катания.'},
+ {t:'Деревья, камни, скалы',x:650,y:250,d:'Отдельно стоящие деревья, камни и скальные выступы, особенно там, где возможен выкат за пределы трассы.'},
+ {t:'Зоны посадки и высадки',x:65,y:440,d:'Где есть опасность столкновения лыжника со зданием операторской подъёмника.'}
+];
+var svg=$('#slopeSvg'),NS='http://www.w3.org/2000/svg',list=$('#plList');
+PL.forEach(function(p,i){var g=D.createElementNS(NS,'g');g.setAttribute('class','hs');g.innerHTML='<circle class="r" cx="'+p.x+'" cy="'+p.y+'" r="14" style="animation-delay:'+(i*0.3)+'s"/><circle class="p" cx="'+p.x+'" cy="'+p.y+'" r="14"/><text x="'+p.x+'" y="'+(p.y+4)+'" text-anchor="middle">'+(i+1)+'</text>';g.addEventListener('click',function(){setPl(i)});svg.appendChild(g);p.g=g;
+ var li=D.createElement('li');li.innerHTML='<i>'+(i+1)+'</i>'+p.t;li.addEventListener('click',function(){setPl(i)});list.appendChild(li);p.li=li});
+function setPl(i){PL.forEach(function(p,k){p.g.classList.toggle('on',k===i);p.li.classList.toggle('on',k===i)});$('#plTitle').textContent=PL[i].t;$('#plText').textContent=PL[i].d;$('#plCode').textContent='Объект '+(i+1)+' из '+PL.length}
+setPl(0);
+
+/* configurator */
+var CN=[['Опоры канатных дорог','кресельные и гондольные'],['Снежные пушки','и их опоры'],['Опоры освещения','вдоль трассы'],['Деревья и камни','у границы трассы'],['Здания операторских','в зонах посадки и высадки']];
+var cnt=$('#cnt'),vals=CN.map(function(){return 0});
+CN.forEach(function(c,i){var r=D.createElement('div');r.className='cnt-row';r.innerHTML='<div><b>'+c[0]+'</b><span>'+c[1]+'</span></div><div class="step"><button type="button" data-d="-1" aria-label="Меньше">−</button><input inputmode="numeric" value="0" aria-label="'+c[0]+'"><button type="button" data-d="1" aria-label="Больше">+</button></div>';
+ var inp=$('input',r);$$('button',r).forEach(function(b){b.addEventListener('click',function(){vals[i]=Math.max(0,Math.min(999,vals[i]+(+b.dataset.d)));inp.value=vals[i];tot()})});
+ inp.addEventListener('input',function(){vals[i]=Math.min(999,+inp.value.replace(/\D/g,'')||0);inp.value=vals[i];tot()});cnt.appendChild(r)});
+var CO=[['#FF5B1F','#C2410C','оранжевый'],['#1F6FEB','#1450B8','синий'],['#E11D48','#A3112F','красный'],['#16A34A','#0F7535','зелёный'],['#FACC15','#C9A10A','жёлтый'],['#111827','#000','чёрный']],col=0;
+var cw=$('#colors');CO.forEach(function(c,i){var b=D.createElement('button');b.type='button';b.style.background=c[0];b.setAttribute('aria-label',c[2]);b.addEventListener('click',function(){col=i;$$('button',cw).forEach(function(x,k){x.classList.toggle('on',k===i)});$('#matFront').setAttribute('fill',c[0]);$('#matSide').setAttribute('fill',c[1]);$('#matText').setAttribute('fill',i===4?'#111':'#fff');tot()});cw.appendChild(b)});
+$$('button',cw)[0].classList.add('on');
+$('#resort').addEventListener('input',function(){$('#matText').textContent=(this.value.trim()||'КУРОРТ').toUpperCase();tot()});
+$('#matText').textContent='КУРОРТ';
+function tot(){var s=vals.reduce(function(a,b){return a+b},0);$('#tot').textContent=s;
+ var parts=CN.map(function(c,i){return vals[i]?c[0].toLowerCase()+' '+vals[i]:''}).filter(Boolean);
+ $('#picked').textContent=(parts.length?'Объекты: '+parts.join(', ')+'. ':'Объекты: пока не выбраны. ')+'Цвет: '+CO[col][2]+'. Надпись: '+($('#resort').value.trim()||'нет')+'.'}
+tot();
+$$('.ty').forEach(function(t){t.addEventListener('click',function(){$('#f-type').selectedIndex=+t.dataset.i})});
+
+/* reveal */
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{rootMargin:'0px 0px -10% 0px',threshold:.12});
+$$('[data-r]').forEach(function(el){io.observe(el)});
+addEventListener('load',function(){D.body.classList.add('loaded')});setTimeout(function(){D.body.classList.add('loaded')},800);
+
+/* header */
+var prog=$('#progress'),tk=0;
+function onS(){var y=scrollY,H=D.documentElement.scrollHeight-innerHeight;prog.style.transform='scaleX('+(H>0?y/H:0)+')';D.body.classList.toggle('at-top',y<innerHeight*.6);tk=0}
+addEventListener('scroll',function(){if(!tk){tk=1;requestAnimationFrame(onS)}},{passive:true});onS();
+function tm(o){D.body.classList.toggle('menu-open',o);$('#burger').setAttribute('aria-expanded',o?'true':'false')}
+$('#burger').addEventListener('click',function(){tm(!D.body.classList.contains('menu-open'))});
+$$('#mmenu a').forEach(function(a){a.addEventListener('click',function(){tm(false)})});
+D.addEventListener('keydown',function(e){if(e.key==='Escape')tm(false)});
+
+/* faq */
+$$('.qa').forEach(function(d){var s=$('summary',d),a=$('.a',d);s.addEventListener('click',function(e){if(RM)return;e.preventDefault();
+ if(d.open){a.style.height=a.scrollHeight+'px';requestAnimationFrame(function(){a.style.transition='height .35s';a.style.height='0px'});setTimeout(function(){d.open=false;a.style.cssText=''},350)}
+ else{d.open=true;var hh=a.scrollHeight;a.style.height='0px';requestAnimationFrame(function(){a.style.transition='height .4s';a.style.height=hh+'px'});setTimeout(function(){a.style.cssText=''},420)}})});
+
+/* form */
+var tel=$('#f-tel');tel.addEventListener('input',function(){var d=tel.value.replace(/\D/g,'');if(d[0]==='8')d='7'+d.slice(1);if(d&&d[0]!=='7')d='7'+d;d=d.slice(0,11);var r='+7';if(d.length>1)r+=' ('+d.slice(1,4);if(d.length>=4)r+=')';if(d.length>4)r+=' '+d.slice(4,7);if(d.length>7)r+='-'+d.slice(7,9);if(d.length>9)r+='-'+d.slice(9,11);tel.value=d.length?r:''});
+$('#lf').addEventListener('submit',function(e){e.preventDefault();this.classList.add('done')});
+$('#again').addEventListener('click',function(){$('#lf').classList.remove('done')});
+$('#gapsN').textContent=$$('.gap').length;
+$('#gapsToggle').addEventListener('click',function(){D.body.classList.toggle('clean')});
+})();
+</script>
+</body>
+</html>
