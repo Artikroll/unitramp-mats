@@ -70,25 +70,28 @@ body.menu-open .mmenu{opacity:1;visibility:visible}
 .mmenu .btn{margin-top:auto}
 
 /* hero */
-.hero{position:relative;background:var(--snow);overflow:hidden}
-.hero-grid{display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - 68px);min-height:calc(100svh - 68px)}
-.hero-l{padding:72px var(--pad) 48px max(var(--pad),calc((100vw - var(--max))/2));display:flex;flex-direction:column;justify-content:center}
-.hero h1{font-size:clamp(46px,5.6vw,92px);line-height:.98;margin-top:24px}
+.hero{position:relative;overflow:hidden;min-height:calc(100vh - 68px);min-height:calc(100svh - 68px);display:flex;align-items:center;background:var(--snow)}
+.hero-bg{position:absolute;top:0;bottom:0;right:0;width:52%}
+.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:46% 40%;transform:scale(1.08);transition:transform 2.2s var(--out)}
+.loaded .hero-bg img{transform:none}
+.hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--snow) 0%,rgba(242,245,248,.6) 12%,rgba(242,245,248,0) 34%)}
+.hero-in{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:end;padding-top:64px;padding-bottom:56px;width:100%}
+.hero h1{font-size:clamp(46px,5.4vw,88px);line-height:.98;margin-top:24px}
 .hero h1 em{font-style:normal;color:var(--or)}
 .hero .sub{font-size:20px;color:var(--ink-2);margin-top:24px;max-width:28em}
 .hero .ctas{display:flex;gap:12px;margin-top:36px;flex-wrap:wrap}
-.hero-specs{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:56px;border-top:1px solid var(--line)}
+.hero-specs{display:grid;grid-template-columns:repeat(3,1fr);margin-top:48px;border-top:1px solid var(--line);max-width:560px}
 .hero-specs div{padding:18px 16px 0 0}
 .hero-specs div+div{padding-left:16px;border-left:1px solid var(--line)}
 .hero-specs b{display:block;font:600 26px/1.1 var(--b);font-stretch:88%;letter-spacing:-.02em}
 .hero-specs span{display:block;font:500 11px/1.4 var(--m);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);margin-top:6px}
-.hero-r{position:relative;overflow:hidden}
-.hero-r img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.08);transition:transform 2s var(--out)}
-.loaded .hero-r img{transform:none}
-.hero-r .badge{position:absolute;left:24px;bottom:24px;background:#fff;border-radius:var(--r);padding:16px 18px;display:flex;gap:14px;align-items:center;box-shadow:0 20px 40px -24px rgba(0,0,0,.4)}
-.hero-r .badge .g{width:44px;height:44px;border-radius:50%;background:var(--or);display:grid;place-items:center;color:#fff;font:700 12px/1 var(--m)}
-.hero-r .badge b{font:600 15px/1.2 var(--b)}
-.hero-r .badge span{display:block;font-size:13px;color:var(--ink-2)}
+.hero-card{justify-self:start;align-self:end;width:min(300px,100%);margin-left:24px;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(14,26,43,.45)}
+.hc-img{aspect-ratio:4/3.4;overflow:hidden}
+.hc-img img{width:100%;height:100%;object-fit:cover;object-position:2% 62%}
+.hc-txt{display:flex;gap:14px;align-items:center;padding:16px 18px}
+.hc-txt .g{flex:none;width:44px;height:44px;border-radius:50%;background:var(--or);display:grid;place-items:center;color:#fff;font:700 12px/1 var(--m)}
+.hc-txt b{font:600 15px/1.2 var(--b)}
+.hc-txt span{display:block;font-size:13px;color:var(--ink-2)}
 .hero [data-in]{opacity:0;transform:translateY(16px);transition:opacity .8s var(--ease),transform .9s var(--out)}
 .loaded .hero [data-in]{opacity:1;transform:none}
 
@@ -96,16 +99,27 @@ body.menu-open .mmenu{opacity:1;visibility:visible}
 [data-r].in{opacity:1;transform:none}
 
 /* slope */
-.slope-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:24px;align-items:stretch}
-.slope{position:relative;background:linear-gradient(180deg,#DCE8F5,#F7FAFD 60%);border-radius:var(--r);overflow:hidden;aspect-ratio:16/10}
+.slope-grid{display:grid;grid-template-columns:1.55fr 1fr;gap:20px;align-items:stretch}
+.slope{position:relative;border-radius:10px;overflow:hidden;background:#EEF4FB;aspect-ratio:1200/680;box-shadow:0 30px 60px -40px rgba(14,26,43,.5)}
 .slope svg{position:absolute;inset:0;width:100%;height:100%}
+.slope .lbl{position:absolute;left:14px;top:12px;z-index:2;font:500 11px/1 var(--m);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);background:rgba(255,255,255,.8);padding:7px 9px;border-radius:4px}
+.showall{position:absolute;right:12px;top:10px;z-index:2;height:34px;padding:0 14px;border-radius:4px;border:0;background:var(--ink);color:#fff;font:600 13px/1 var(--b);cursor:pointer;transition:background .2s}
+.showall.on{background:var(--or)}
+.slope .mat{fill:var(--or);opacity:0;transform-box:fill-box;transform-origin:50% 100%;transform:scaleY(.2);transition:opacity .35s,transform .5s var(--out);filter:url(#sh)}
+.slope g.lit .mat,.slope.all .mat{opacity:1;transform:none}
+.slope .spray circle{fill:#fff;animation:spray 1.6s linear infinite}
+.slope .spray circle:nth-child(2){animation-delay:.3s}.slope .spray circle:nth-child(3){animation-delay:.6s}.slope .spray circle:nth-child(4){animation-delay:.9s}.slope .spray circle:nth-child(5){animation-delay:1.1s}.slope .spray circle:nth-child(6){animation-delay:1.3s}
+@keyframes spray{0%{opacity:0;transform:translate(-20px,20px)}30%{opacity:1}100%{opacity:0;transform:translate(30px,-20px)}}
 .slope .hs{cursor:pointer}
-.slope .hs circle.p{fill:var(--or);stroke:#fff;stroke-width:3;transition:r .2s}
-.slope .hs circle.r{fill:none;stroke:var(--or);stroke-width:2;transform-box:fill-box;transform-origin:center;animation:ring 2.2s var(--ease) infinite}
-.slope .hs.on circle.p{fill:var(--ink)}
-.slope .hs text{font:600 12px var(--b);fill:#fff;pointer-events:none}
-@keyframes ring{0%{transform:scale(1);opacity:.9}100%{transform:scale(2.6);opacity:0}}
-.slope .lbl{position:absolute;left:14px;top:12px;font:500 11px/1 var(--m);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+.slope .hs .p{fill:#fff;stroke:var(--or);stroke-width:3}
+.slope .hs text{font:700 13px var(--b);fill:var(--or);pointer-events:none}
+.slope .hs .r{fill:none;stroke:var(--or);stroke-width:2;transform-box:fill-box;transform-origin:center;animation:ring 2.2s var(--ease) infinite}
+.slope .hs.on .p{fill:var(--or)}
+.slope .hs.on text{fill:#fff}
+@keyframes ring{0%{transform:scale(1);opacity:.9}100%{transform:scale(2.4);opacity:0}}
+.place .ph{margin-top:18px;border-radius:6px;overflow:hidden;aspect-ratio:16/9;background:rgba(255,255,255,.06);display:none}
+.place .ph.on{display:block}
+.place .ph img{width:100%;height:100%;object-fit:cover}
 .place{background:var(--ink);color:#fff;border-radius:var(--r);padding:32px;display:flex;flex-direction:column}
 .place .code{color:rgba(255,255,255,.55)}
 .place h3{font-size:28px;margin:14px 0 12px;font-weight:700;font-stretch:88%}
@@ -221,6 +235,36 @@ body.menu-open .mmenu{opacity:1;visibility:visible}
 .ab-nums b{display:block;font:700 34px/1 var(--b);font-stretch:88%}
 .ab-nums span{font-size:14px;color:var(--ink-2)}
 
+
+.why3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.why3>div{background:var(--snow);border-radius:8px;padding:28px}
+.why3 h3{margin-top:14px;font-size:24px;font-weight:700;font-stretch:88%}
+.why3 p{font-size:15px;color:var(--ink-2);margin-top:8px}
+.ord{list-style:none;display:grid;grid-template-columns:repeat(6,1fr);gap:0;border-top:2px solid var(--ink);counter-reset:o}
+.ord li{padding:22px 18px 24px 0;position:relative}
+.ord li+li{padding-left:18px;border-left:1px solid var(--line)}
+.ord li::before{content:"";position:absolute;top:-7px;left:0;width:12px;height:12px;border-radius:50%;background:var(--or)}
+.ord li+li::before{left:18px}
+.ord i{font:500 12px/1 var(--m);color:var(--ink-3);font-style:normal}
+.ord b{display:block;font:600 19px/1.2 var(--b);margin-top:12px}
+.ord p{font-size:14px;color:var(--ink-2);margin-top:6px}
+.ord em{display:inline-block;margin-top:10px;font:500 12px/1 var(--m);background:var(--or);color:#fff;padding:6px 8px;border-radius:4px;font-style:normal}
+.ord em.gp{background:none;color:var(--ink-3);padding:0}
+.season{margin-top:32px;display:grid;grid-template-columns:1fr 2.2fr;gap:24px;align-items:center;background:var(--snow);border-radius:8px;padding:24px}
+.season p{font-size:15px;color:var(--ink-2);margin-top:8px}
+.ss-bar{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px}
+.ss-bar div{background:var(--c);border-radius:6px;padding:14px;min-height:84px}
+.ss-bar b{display:block;font:600 16px/1.2 var(--b)}
+.ss-bar span{font-size:13px;opacity:.8}
+.chk-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:56px;align-items:center}
+.chk{display:grid;gap:0;border-top:1px solid rgba(255,255,255,.15)}
+.chk div{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:20px 0;border-bottom:1px solid rgba(255,255,255,.15);align-items:center}
+.chk span{color:rgba(255,255,255,.75);font-size:16px}
+.chk b{font:600 18px/1.3 var(--b);color:#fff;padding-left:28px;position:relative}
+.chk b::before{content:"";position:absolute;left:0;top:4px;width:16px;height:16px;border-radius:50%;background:var(--or)}
+@media (max-width:1199px){.ord{grid-template-columns:repeat(3,1fr)}.ord li:nth-child(4){padding-left:0;border-left:0}.ord li:nth-child(4)::before{left:0}.season,.chk-grid{grid-template-columns:1fr}}
+@media (max-width:767px){.why3{grid-template-columns:1fr}.ord{grid-template-columns:1fr 1fr}.ord li:nth-child(n){padding:18px 12px 18px 0;border-left:0}.ord li:nth-child(n)::before{left:0}.ss-bar{grid-template-columns:1fr 1fr}.chk div{grid-template-columns:1fr;gap:6px}}
+
 /* faq form */
 .faq{display:grid;grid-template-columns:1fr 1.6fr;gap:48px}
 .qa{border-bottom:1px solid var(--line)}
@@ -263,9 +307,11 @@ form.done .sent{opacity:1;pointer-events:auto}
 @media (max-width:1199px){
   :root{--pad:32px;--sec:96px}
   .hdr nav,.hdr .tel,.hdr .btn,.hdr .gost{display:none}.burger{display:block}
-  .hero-grid{grid-template-columns:1fr}
-  .hero-l{padding:56px var(--pad) 40px}
-  .hero-r{min-height:420px}
+  .hero{flex-direction:column;align-items:stretch}
+  .hero-bg{position:relative;width:100%;height:46vh;order:2}
+  .hero-bg::after{background:linear-gradient(180deg,var(--snow) 0%,rgba(242,245,248,0) 20%)}
+  .hero-in{grid-template-columns:1fr}
+  .hero-card{display:none}
   .head,.slope-grid,.tech-grid,.cfg-grid,.ab,.faq,.cta-grid{grid-template-columns:1fr}
   .types{grid-template-columns:1fr 1fr}
   .prev{position:relative;top:0}
@@ -279,16 +325,15 @@ form.done .sent{opacity:1;pointer-events:auto}
   .lead,.hero .sub{font-size:17px}
   h2{font-size:clamp(30px,8.6vw,40px)}
   .hdr .wrap{height:64px}.hdr .logo img{width:112px}
-  .hero-l{padding:36px 16px 28px}
+  .hero-in{padding-top:32px;padding-bottom:32px}
   .hero h1{font-size:clamp(38px,11vw,50px)}
+  .hero-card{width:100%}
   .hero .ctas{flex-direction:column}.hero .ctas .btn{width:100%}
   .hero-specs{margin-top:32px}
   .hero-specs b{font-size:19px}
   .hero-specs span{font-size:10px}
-  .hero-r{min-height:320px}
   .head{margin-bottom:32px;gap:14px}
-  .slope{aspect-ratio:4/3}
-  .slope .hs text{display:none}
+  .slope .lbl{display:none}
   .place{padding:22px}
   .types{grid-template-columns:1fr}
   .layers{height:380px}
@@ -335,7 +380,8 @@ form.done .sent{opacity:1;pointer-events:auto}
 <main id="top">
 <!-- 1 HERO -->
 <section class="hero">
-  <div class="hero-grid">
+  <div class="hero-bg"><img src="assets/img/m-skier.jpg" alt="Горнолыжный склон с подъёмником" fetchpriority="high"></div>
+  <div class="wrap hero-in">
     <div class="hero-l">
       <div class="code" data-in><b>■</b>Производитель с 2014 года · Новосибирск</div>
       <h1 data-in style="transition-delay:.08s">Защитные маты для <em>горнолыжных трасс</em></h1>
@@ -347,9 +393,20 @@ form.done .sent{opacity:1;pointer-events:auto}
         <div><b>1 год</b><span>гарантия производителя</span></div>
       </div>
     </div>
-    <div class="hero-r">
-      <img src="assets/img/m-resort.jpg" alt="Защитные маты на опорах горнолыжной трассы" fetchpriority="high">
-      <div class="badge" data-in style="transition-delay:.5s"><span class="g">ГОСТ</span><div><b>Р 55881-2016</b><span>Сертифицировано</span></div></div>
+    <div class="hero-card" data-in style="transition-delay:.45s">
+      <div class="hc-img"><img src="assets/img/m-resort.jpg" alt="Мат на опоре освещения, курорт «Манжерок»"></div>
+      <div class="hc-txt"><span class="g">ГОСТ</span><div><b>Р 55881-2016</b><span>Маты на опорах освещения · «Манжерок»</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section class="sec" id="why" style="padding-bottom:0">
+  <div class="wrap">
+    <div class="why3">
+      <div data-r><span class="code"><b>A</b>Требование</span><h3>ГОСТ Р 55881-2016</h3><p>Стандарт перечисляет, какие объекты на трассе курорт обязан закрыть защитными матами.</p></div>
+      <div data-r style="transition-delay:.05s"><span class="code"><b>B</b>Безопасность</span><h3>Здоровье гостей</h3><p>Мат гасит удар при выкате с трассы и столкновении с опорой, пушкой или деревом.</p></div>
+      <div data-r style="transition-delay:.1s"><span class="code"><b>C</b>Облик</span><h3>Узнаваемый склон</h3><p>Маты в фирменном цвете с логотипом видны на каждой фотографии гостей.</p></div>
     </div>
   </div>
 </section>
@@ -362,27 +419,67 @@ form.done .sent{opacity:1;pointer-events:auto}
       <p class="lead" data-r>По ГОСТ Р 55881-2016 защитные маты ставят там, где лыжник может столкнуться с препятствием. Нажмите на точку на схеме.</p>
     </div>
     <div class="slope-grid">
-      <div class="slope" data-r>
-        <span class="lbl">Схема склона</span>
-        <svg viewBox="0 0 800 500" id="slopeSvg" aria-hidden="true">
-          <path d="M0 140 L520 40 L800 0 L800 500 L0 500 Z" fill="#fff"/>
-          <path d="M0 140 L520 40 L800 0" fill="none" stroke="#BFD0E2" stroke-width="2"/>
-          <path d="M60 500 C200 380 320 300 420 230 S600 120 700 60" fill="none" stroke="#E6EEF6" stroke-width="70" stroke-linecap="round"/>
-          <path d="M60 500 C200 380 320 300 420 230 S600 120 700 60" fill="none" stroke="#C9D7E6" stroke-width="2" stroke-dasharray="8 10"/>
-          <g stroke="#0E1A2B" stroke-width="5"><line x1="560" y1="40" x2="560" y2="140"/><line x1="360" y1="110" x2="360" y2="250"/><line x1="160" y1="180" x2="160" y2="360"/></g>
-          <path d="M140 180 L560 40 M140 196 L560 56" stroke="#0E1A2B" stroke-width="2"/>
-          <g fill="#0E1A2B"><rect x="300" y="138" width="22" height="16" rx="3"/><rect x="460" y="86" width="22" height="16" rx="3"/></g>
-          <g fill="#2E5D3A"><path d="M640 200 l22 50 h-44z"/><path d="M670 230 l18 42 h-36z"/><path d="M110 430 l20 46 h-40z"/></g>
-          <path d="M540 300 q30 -30 60 0 q-30 20 -60 0z" fill="#9AA8B8"/>
-          <g fill="#0E1A2B"><rect x="250" y="290" width="6" height="90"/><rect x="236" y="286" width="34" height="8" rx="2"/></g>
-          <path d="M470 330 l40 -26 l14 22 l-40 26z" fill="#0E1A2B"/>
-          <rect x="20" y="410" width="90" height="60" rx="4" fill="#0E1A2B"/>
+      <div class="slope" data-r id="slope">
+        <span class="lbl">Склон · нажмите на объект</span>
+        <button class="showall" id="showAll" type="button">Показать все маты</button>
+        <svg viewBox="0 0 1200 680" id="slopeSvg" aria-hidden="true">
+          <defs>
+            <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#BFD7F2"/><stop offset="1" stop-color="#EEF4FB"/></linearGradient>
+            <linearGradient id="mt1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9DB3CC"/><stop offset="1" stop-color="#C9D8E8"/></linearGradient>
+            <linearGradient id="mt2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#E3ECF5"/></linearGradient>
+            <linearGradient id="piste" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F7FAFD"/><stop offset="1" stop-color="#E9F0F7"/></linearGradient>
+            <filter id="sh" x="-20%" y="-20%" width="140%" height="160%"><feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#0E1A2B" flood-opacity=".18"/></filter>
+          </defs>
+          <rect width="1200" height="680" fill="url(#sky)"/>
+          <circle cx="1040" cy="110" r="46" fill="#FFF6D9" opacity=".9"/>
+          <path d="M0 300 L170 170 L290 240 L430 110 L560 230 L700 120 L860 250 L1000 140 L1200 260 L1200 680 L0 680Z" fill="url(#mt1)"/>
+          <path d="M380 150 L430 110 L478 152 L455 150 L430 132 L405 154Z M650 160 L700 120 L748 162 L722 158 L700 140 L676 162Z M960 172 L1000 140 L1040 176 L1018 172 L1000 158 L982 176Z" fill="#fff"/>
+          <path d="M0 420 C220 330 420 280 640 250 C860 220 1020 200 1200 190 L1200 680 L0 680Z" fill="url(#mt2)"/>
+          <g fill="#2C4A3A">
+            <path d="M40 470 l26 -64 l26 64z"/><path d="M80 480 l22 -54 l22 54z"/><path d="M128 460 l24 -60 l24 60z"/>
+            <path d="M1080 330 l22 -56 l22 56z"/><path d="M1118 322 l20 -50 l20 50z"/><path d="M1150 336 l22 -54 l22 54z"/>
+            <path d="M880 290 l18 -46 l18 46z"/><path d="M910 284 l16 -40 l16 40z"/>
+          </g>
+          <path d="M1060 240 C900 280 760 330 640 400 C520 470 400 560 300 680 L520 680 C590 590 680 500 780 430 C880 360 990 300 1110 260Z" fill="url(#piste)" stroke="#D5E1EE" stroke-width="2"/>
+          <path d="M1040 255 C890 300 760 350 660 420 C560 490 470 580 400 680" fill="none" stroke="#DCE6F1" stroke-width="2" stroke-dasharray="3 9"/>
+          <path d="M1080 250 C930 295 800 350 700 420 C600 495 520 590 460 680" fill="none" stroke="#DCE6F1" stroke-width="2" stroke-dasharray="3 9"/>
+          <!-- lift -->
+          <path id="cable" d="M150 560 L520 400 L830 270 L1110 160" fill="none" stroke="#0E1A2B" stroke-width="2"/>
+          <path d="M150 572 L520 412 L830 282 L1110 172" fill="none" stroke="#0E1A2B" stroke-width="1.4" opacity=".6"/>
+          <g id="obj-tower">
+            <g class="tower"><rect x="514" y="398" width="12" height="170" fill="#2B3A4F"/><rect x="494" y="394" width="52" height="10" rx="3" fill="#0E1A2B"/></g>
+            <g class="tower"><rect x="824" y="268" width="11" height="150" fill="#2B3A4F"/><rect x="806" y="264" width="48" height="9" rx="3" fill="#0E1A2B"/></g>
+            <rect class="mat" x="506" y="500" width="28" height="70" rx="4"/>
+            <rect class="mat" x="817" y="356" width="25" height="62" rx="4"/>
+          </g>
+          <g class="chairs">
+            <g><path d="M-10 0 h20 v14 h-20z" fill="#FF5B1F"/><line x1="0" y1="-14" x2="0" y2="0" stroke="#0E1A2B" stroke-width="2"/><animateMotion dur="16s" repeatCount="indefinite" rotate="0"><mpath href="#cable"/></animateMotion></g>
+            <g><path d="M-10 0 h20 v14 h-20z" fill="#2F6FED"/><line x1="0" y1="-14" x2="0" y2="0" stroke="#0E1A2B" stroke-width="2"/><animateMotion dur="16s" begin="-5.3s" repeatCount="indefinite"><mpath href="#cable"/></animateMotion></g>
+            <g><path d="M-10 0 h20 v14 h-20z" fill="#FF5B1F"/><line x1="0" y1="-14" x2="0" y2="0" stroke="#0E1A2B" stroke-width="2"/><animateMotion dur="16s" begin="-10.6s" repeatCount="indefinite"><mpath href="#cable"/></animateMotion></g>
+          </g>
+          <!-- station -->
+          <g id="obj-station"><rect x="70" y="520" width="140" height="90" rx="4" fill="#33465E"/><path d="M60 524 L140 486 L220 524Z" fill="#0E1A2B"/><rect x="92" y="548" width="34" height="26" fill="#BFD7F2"/><rect x="150" y="560" width="34" height="50" fill="#22324A"/>
+            <rect class="mat" x="204" y="540" width="24" height="70" rx="4"/></g>
+          <!-- cannon -->
+          <g id="obj-cannon"><path d="M700 470 L720 400 L740 470" fill="none" stroke="#2B3A4F" stroke-width="7" stroke-linecap="round"/><g transform="rotate(-24 720 400)"><rect x="700" y="384" width="62" height="30" rx="14" fill="#E9EEF4" stroke="#2B3A4F" stroke-width="3"/><circle cx="760" cy="399" r="9" fill="#2B3A4F"/></g>
+            <g class="spray"><circle cx="790" cy="370" r="3"/><circle cx="810" cy="356" r="2.5"/><circle cx="828" cy="346" r="2"/><circle cx="802" cy="342" r="2"/><circle cx="822" cy="368" r="2.4"/><circle cx="846" cy="334" r="1.8"/></g>
+            <rect class="mat" x="706" y="420" width="28" height="52" rx="4"/></g>
+          <!-- lamps -->
+          <g id="obj-lamp"><g fill="#2B3A4F"><rect x="944" y="250" width="6" height="96"/><rect x="934" y="244" width="26" height="8" rx="3"/><rect x="606" y="398" width="6" height="104"/><rect x="596" y="392" width="26" height="8" rx="3"/></g><g fill="#FFE7A3"><circle cx="947" cy="256" r="5"/><circle cx="609" cy="404" r="5"/></g>
+            <rect class="mat" x="937" y="298" width="20" height="50" rx="3"/><rect class="mat" x="599" y="450" width="20" height="54" rx="3"/></g>
+          <!-- tree & rock -->
+          <g id="obj-tree"><path d="M372 560 l40 -100 l40 100z" fill="#2C4A3A"/><rect x="406" y="560" width="12" height="40" fill="#5A4030"/><path d="M260 640 q40 -50 90 -10 q20 20 -10 30 q-50 10 -80 -20z" fill="#9AA8B8"/>
+            <rect class="mat" x="398" y="556" width="28" height="48" rx="4"/><path class="mat" d="M262 640 q40 -48 88 -10 l-6 10 q-40 -30 -76 6z"/></g>
+          <!-- skier -->
+          <g class="skier"><g><circle cx="0" cy="-26" r="6" fill="#0E1A2B"/><path d="M-4 -20 L6 -6 L-2 6 M6 -6 L14 -14" stroke="#FF5B1F" stroke-width="5" stroke-linecap="round" fill="none"/><path d="M-16 10 L18 4" stroke="#0E1A2B" stroke-width="3" stroke-linecap="round"/><animateMotion dur="9s" repeatCount="indefinite" path="M1040 262 C900 300 780 350 690 410 C590 480 500 560 430 660"/></g></g>
+          <g id="hs"></g>
         </svg>
       </div>
       <div class="place" data-r style="transition-delay:.06s">
         <div class="code" id="plCode">Объект 1 из 5</div>
         <h3 id="plTitle"></h3>
         <p id="plText"></p>
+        <div class="ph" id="plPh"><img id="plImg" src="assets/img/m-resort.jpg" alt=""></div>
         <ul id="plList"></ul>
       </div>
     </div>
@@ -454,18 +551,63 @@ form.done .sent{opacity:1;pointer-events:auto}
   </div>
 </section>
 
+<!-- ORDER -->
+<section class="sec" id="order" style="padding-top:0">
+  <div class="wrap">
+    <div class="head">
+      <div><div class="code" data-r><b>05</b>Заказ</div><h2 data-r>Как проходит заказ</h2></div>
+      <p class="lead" data-r>От фотографии объекта до матов на склоне. Менеджер ведёт заказ на всех шагах.</p>
+    </div>
+    <ol class="ord" data-r>
+      <li><i>01</i><b>Заявка</b><p>Список объектов или фото склона.</p></li>
+      <li><i>02</i><b>Подбор</b><p>Тип и размер мата под каждый объект.</p></li>
+      <li><i>03</i><b>Смета</b><p>Расчёт за 12 часов.</p><em>12 ч</em></li>
+      <li><i>04</i><b>Договор</b><p>Цвет, логотип, сроки.</p></li>
+      <li><i>05</i><b>Производство</b><p>Каждый мат проходит контроль.</p><em class="gp">срок <span class="gap">партии</span></em></li>
+      <li><i>06</i><b>Отгрузка</b><p>Видео погрузки и отслеживание.</p></li>
+    </ol>
+    <div class="season" data-r>
+      <div class="ss-h"><span class="code"><b>■</b>Когда заказывать</span><p>Маты лучше заказать до начала сезона, чтобы склон открылся уже защищённым.</p></div>
+      <div class="ss-bar">
+        <div style="--c:#E6ECF2"><b>Весна–лето</b><span>осмотр склона, список объектов</span></div>
+        <div style="--c:#FFD9C7"><b>Лето–осень</b><span>заказ и производство</span></div>
+        <div style="--c:#FF5B1F;color:#fff"><b>Осень</b><span>отгрузка и монтаж</span></div>
+        <div style="--c:#0E1A2B;color:#fff"><b>Зима</b><span>сезон</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHECK -->
+<section class="sec" id="check" style="background:var(--ink);color:#fff">
+  <div class="wrap chk-grid">
+    <div>
+      <div class="code" data-r style="color:rgba(255,255,255,.55)"><b>06</b>Выбор поставщика</div>
+      <h2 data-r style="margin-top:18px">Что спросить у любого поставщика матов</h2>
+      <p class="lead" data-r style="color:rgba(255,255,255,.7);margin-top:18px">Пять вопросов, после которых понятно, сколько прослужит мат. Наши ответы справа.</p>
+    </div>
+    <div class="chk" data-r>
+      <div><span>Какая плотность ткани?</span><b>ПВХ 650 г/м²</b></div>
+      <div><span>Чем наполнен мат?</span><b>Поролон 22–28 + пена 28–35 кг/м³</b></div>
+      <div><span>Как защищены швы от влаги?</span><b>Герметичная конструкция</b></div>
+      <div><span>Как мат крепится к опоре?</span><b>Липучка или шнур с люверсами</b></div>
+      <div><span>Есть ли сертификат?</span><b>ГОСТ Р 55881-2016</b></div>
+    </div>
+  </div>
+</section>
+
 <!-- 6 BRAND -->
 <section class="sec" id="brand">
   <div class="wrap">
     <div class="head">
-      <div><div class="code" data-r><b>05</b>На курортах</div><h2 data-r>Маты в цвете курорта</h2></div>
+      <div><div class="code" data-r><b>07</b>На курортах</div><h2 data-r>Маты в цвете курорта</h2></div>
       <p class="lead" data-r>Наносим логотип и шьём маты в фирменном цвете. Безопасность становится частью облика склона. <span class="gap">список курортов-клиентов и разрешение их показывать</span></p>
     </div>
     <div class="br-grid">
-      <figure data-r><img src="assets/img/m-gondola.jpg" alt="Маты у станции канатной дороги" loading="lazy"><figcaption>Маты у станции канатной дороги</figcaption></figure>
+      <figure data-r><img src="assets/img/m-resort.jpg" alt="Маты на опоре освещения, «Манжерок»" loading="lazy" style="object-position:28% 60%"><figcaption>Опора освещения, «Манжерок»</figcaption></figure>
       <figure data-r style="transition-delay:.05s"><img src="assets/img/m-logo.jpg" alt="Мат с логотипом курорта" loading="lazy" style="object-position:50% 35%"><figcaption>Логотип курорта на мате</figcaption></figure>
       <div class="br-txt" data-r style="transition-delay:.1s"><b>Любой цвет. Любой логотип.</b><p>Подбираем цвет под фирменный стиль курорта и наносим логотип, чтобы маты работали и на безопасность, и на узнаваемость.</p></div>
-      <figure data-r style="grid-column:span 2"><img src="assets/img/m-strip.jpg" alt="Горнолыжный склон" loading="lazy" style="aspect-ratio:21/7"></figure>
+      <figure data-r style="grid-column:span 2"><img src="assets/img/m-gondola.jpg" alt="Маты у станции канатной дороги" loading="lazy" style="aspect-ratio:21/9;object-position:50% 62%"><figcaption>Маты у станции канатной дороги</figcaption></figure>
     </div>
   </div>
 </section>
@@ -474,7 +616,7 @@ form.done .sent{opacity:1;pointer-events:auto}
 <section class="sec" id="delivery" style="padding-top:0">
   <div class="wrap">
     <div class="head">
-      <div><div class="code" data-r><b>06</b>Доставка</div><h2 data-r>Отгрузка по всей России</h2></div>
+      <div><div class="code" data-r><b>08</b>Доставка</div><h2 data-r>Отгрузка по всей России</h2></div>
       <p class="lead" data-r>Соблюдаем сроки производства и показываем, как едет ваш заказ. <span class="gap">срок производства партии</span></p>
     </div>
     <div class="dv" data-r>
@@ -494,7 +636,7 @@ form.done .sent{opacity:1;pointer-events:auto}
 <section class="sec" id="about" style="background:var(--snow)">
   <div class="wrap ab">
     <div>
-      <div class="code" data-r><b>07</b>Сертификаты</div>
+      <div class="code" data-r><b>09</b>Сертификаты</div>
       <h2 data-r style="margin-top:18px">Соответствует ГОСТ Р 55881-2016</h2>
       <div class="certs" data-r style="margin-top:28px">
         <a href="assets/img/cert-1.jpg" target="_blank" rel="noopener"><img src="assets/img/cert-1.jpg" alt="Сертификат соответствия" loading="lazy"></a>
@@ -503,7 +645,7 @@ form.done .sent{opacity:1;pointer-events:auto}
       </div>
     </div>
     <div>
-      <div class="code" data-r><b>08</b>О компании</div>
+      <div class="code" data-r><b>10</b>О компании</div>
       <h2 data-r style="margin-top:18px">Шьём маты с 2014 года</h2>
       <p class="lead" data-r style="margin-top:18px">UNITRAMP производит защитные маты для горнолыжных трасс на своём производстве в Новосибирске. Цена от производителя, без посредников.</p>
       <div class="ab-nums" data-r><div><b>с 2014</b><span>производим маты для склонов</span></div><div><b>1 год</b><span>гарантия производителя</span></div></div>
@@ -515,7 +657,7 @@ form.done .sent{opacity:1;pointer-events:auto}
 <!-- 9 FAQ -->
 <section class="sec" id="faq">
   <div class="wrap faq">
-    <div><div class="code" data-r><b>09</b>Вопросы</div><h2 data-r style="margin-top:18px">Частые вопросы</h2></div>
+    <div><div class="code" data-r><b>11</b>Вопросы</div><h2 data-r style="margin-top:18px">Частые вопросы</h2></div>
     <div data-r>
       <details class="qa"><summary>Сколько стоят маты?<i class="pm"></i></summary><div class="a"><p>Цена зависит от типа, размера, количества и нанесения логотипа. Пришлите список объектов, и мы рассчитаем смету за 12 часов.</p></div></details>
       <details class="qa"><summary>Как быстро сошьёте партию?<i class="pm"></i></summary><div class="a"><p>Соблюдение сроков производства гарантируем договором. <span class="gap">типичный срок для партии 50 и 200 матов</span></p></div></details>
@@ -531,7 +673,7 @@ form.done .sent{opacity:1;pointer-events:auto}
 <section class="sec cta" id="form">
   <div class="wrap cta-grid">
     <div>
-      <div class="code" data-r><b>10</b>Заявка</div>
+      <div class="code" data-r><b>12</b>Заявка</div>
       <h2 data-r>Смета за 12 часов</h2>
       <p class="lead" data-r>Оставьте контакты и список объектов. Менеджер уточнит детали и пришлёт расчёт.</p>
       <div class="contacts" data-r><a href="tel:88007007809">8 800 700-78-09</a><a href="mailto:info@unitramp.ru">info@unitramp.ru</a></div>
@@ -558,17 +700,20 @@ var $=function(s,c){return (c||D).querySelector(s)},$$=function(s,c){return [].s
 
 /* places from GOST list on sport-mat.com */
 var PL=[
- {t:'Опоры канатных дорог',x:360,y:180,d:'Опоры кресельных и гондольных подъёмников на трассе и рядом с ней.'},
- {t:'Системы снегообразования',x:253,y:340,d:'Снежные пушки и их опоры: все системы искусственного снегообразования.'},
- {t:'Опоры освещения',x:160,y:270,d:'Световые опоры вдоль трассы для вечернего катания.'},
- {t:'Деревья, камни, скалы',x:650,y:250,d:'Отдельно стоящие деревья, камни и скальные выступы, особенно там, где возможен выкат за пределы трассы.'},
- {t:'Зоны посадки и высадки',x:65,y:440,d:'Где есть опасность столкновения лыжника со зданием операторской подъёмника.'}
+ {t:'Опоры канатных дорог',g:'obj-tower',x:520,y:470,d:'Опоры кресельных и гондольных подъёмников на трассе и рядом с ней.'},
+ {t:'Системы снегообразования',g:'obj-cannon',x:720,y:448,d:'Снежные пушки и их опоры: все системы искусственного снегообразования.'},
+ {t:'Опоры освещения',g:'obj-lamp',x:609,y:440,d:'Световые опоры вдоль трассы для вечернего катания.',img:'m-resort.jpg',pos:'28% 55%'},
+ {t:'Деревья, камни, скалы',g:'obj-tree',x:412,y:520,d:'Отдельно стоящие деревья, камни и скальные выступы, особенно там, где возможен выкат за пределы трассы.'},
+ {t:'Зоны посадки и высадки',g:'obj-station',x:216,y:520,d:'Где есть опасность столкновения лыжника со зданием операторской подъёмника.',img:'m-gondola.jpg',pos:'50% 60%'}
 ];
-var svg=$('#slopeSvg'),NS='http://www.w3.org/2000/svg',list=$('#plList');
-PL.forEach(function(p,i){var g=D.createElementNS(NS,'g');g.setAttribute('class','hs');g.innerHTML='<circle class="r" cx="'+p.x+'" cy="'+p.y+'" r="14" style="animation-delay:'+(i*0.3)+'s"/><circle class="p" cx="'+p.x+'" cy="'+p.y+'" r="14"/><text x="'+p.x+'" y="'+(p.y+4)+'" text-anchor="middle">'+(i+1)+'</text>';g.addEventListener('click',function(){setPl(i)});svg.appendChild(g);p.g=g;
+var svg=$('#slopeSvg'),NS='http://www.w3.org/2000/svg',list=$('#plList'),hsG=$('#hs');
+PL.forEach(function(p,i){var g=D.createElementNS(NS,'g');g.setAttribute('class','hs');g.innerHTML='<circle class="r" cx="'+p.x+'" cy="'+p.y+'" r="17" style="animation-delay:'+(i*0.3)+'s"/><circle class="p" cx="'+p.x+'" cy="'+p.y+'" r="17"/><text x="'+p.x+'" y="'+(p.y+5)+'" text-anchor="middle">'+(i+1)+'</text>';g.addEventListener('click',function(){setPl(i)});hsG.appendChild(g);p.h=g;
+ var o=$('#'+p.g);o.style.cursor='pointer';o.addEventListener('click',function(){setPl(i)});
  var li=D.createElement('li');li.innerHTML='<i>'+(i+1)+'</i>'+p.t;li.addEventListener('click',function(){setPl(i)});list.appendChild(li);p.li=li});
-function setPl(i){PL.forEach(function(p,k){p.g.classList.toggle('on',k===i);p.li.classList.toggle('on',k===i)});$('#plTitle').textContent=PL[i].t;$('#plText').textContent=PL[i].d;$('#plCode').textContent='Объект '+(i+1)+' из '+PL.length}
+function setPl(i){PL.forEach(function(p,k){p.h.classList.toggle('on',k===i);p.li.classList.toggle('on',k===i);$('#'+p.g).classList.toggle('lit',k===i)});$('#plTitle').textContent=PL[i].t;$('#plText').textContent=PL[i].d;$('#plCode').textContent='Объект '+(i+1)+' из '+PL.length;
+ var ph=$('#plPh');if(PL[i].img){$('#plImg').src='assets/img/'+PL[i].img;$('#plImg').style.objectPosition=PL[i].pos;$('#plImg').alt=PL[i].t;ph.classList.add('on')}else ph.classList.remove('on')}
 setPl(0);
+$('#showAll').addEventListener('click',function(){var on=$('#slope').classList.toggle('all');this.classList.toggle('on',on);this.textContent=on?'Скрыть маты':'Показать все маты'});
 
 /* configurator */
 var CN=[['Опоры канатных дорог','кресельные и гондольные'],['Снежные пушки','и их опоры'],['Опоры освещения','вдоль трассы'],['Деревья и камни','у границы трассы'],['Здания операторских','в зонах посадки и высадки']];
